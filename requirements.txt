@@ -1,0 +1,16 @@
+# Workshop Requirements
+# Install with: pip install -r requirements.txt
+
+# Core - Required for all blocks
+openai>=1.12.0
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# Strands Agents SDK (Block A - Real Implementation)
+# Note: Strands is AWS-focused and may require AWS credentials
+# If not using AWS, the mock implementation will be used
+strands-agents>=0.1.0
+strands-agents-tools>=0.1.0
+
+# Optional utilities
+python-dotenv>=1.0.0

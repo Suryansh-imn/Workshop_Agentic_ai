@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Model transcript</title>
+<style>
+  :root{
+    --bg:#ffffff; --fg:#1b1b1b; --muted:#767676; --line:#e0e0e0;
+    --code-bg:#f6f6f6; --accent:#444;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;
+        max-width:920px;margin:0 auto;padding:32px 20px 100px;font-size:14px;}
+  h1{font-size:18px;font-weight:600;}
+  header{border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:8px;}
+  .meta{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:6px;}
+  .meta b{color:var(--fg);font-weight:600;}
+  .task{font-size:13px;color:var(--fg);margin-top:8px;}
+  .controls{margin:14px 0 6px;font-family:var(--mono);font-size:12px;}
+  .controls button{font-family:var(--mono);font-size:12px;border:1px solid var(--line);
+        background:#fafafa;padding:4px 10px;border-radius:4px;cursor:pointer;margin-right:6px;}
+  .controls button:hover{background:#f0f0f0;}
+
+  .call{margin:22px 0;padding-top:14px;border-top:1px solid var(--line);}
+  .callno{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.05em;color:var(--fg);margin-bottom:8px;}
+  .dir{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:12px 0 6px;letter-spacing:.03em;}
+  .dir.err{color:#b00020;}
+  .stopr{color:var(--fg);}
+
+  /* one collapsible message */
+  .msg{border:1px solid var(--line);border-radius:5px;margin:5px 0;background:#fff;}
+  .msg > summary{list-style:none;cursor:pointer;padding:7px 10px;display:flex;align-items:center;gap:10px;
+        font-family:var(--mono);font-size:12px;}
+  .msg > summary::-webkit-details-marker{display:none;}
+  .msg > summary::before{content:"▸";color:var(--muted);font-size:10px;}
+  .msg[open] > summary::before{content:"▾";}
+  .rolebadge{font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:11px;
+        border:1px solid var(--line);border-radius:3px;padding:1px 7px;background:#f3f3f3;}
+  .msummary{color:var(--muted);}
+  /* subtle left border per role — neutral grays, one gentle accent */
+  .r-system{border-left:3px solid #b8b8b8;}
+  .r-user{border-left:3px solid #8a8a8a;}
+  .r-assistant{border-left:3px solid #5b5b5b;}
+
+  .mbody{padding:2px 10px 10px;border-top:1px solid var(--line);}
+  .blk{margin:8px 0;}
+  .blabel{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;
+        color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:1px 6px;display:inline-block;margin-bottom:4px;}
+  .blk pre{white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:12px;
+        background:var(--code-bg);border:1px solid var(--line);border-radius:4px;padding:9px 11px;overflow-x:auto;}
+</style></head>
+<body>
+<header>
+  <h1>Model transcript</h1>
+  <div class="meta"><b>openrouter/free</b> &middot; 4 model calls &middot; 5 tool calls</div>
+  <div class="task">What are people saying about LangGraph on Hacker News recently? Search, read a couple of discussions, and summarize the key themes with links.</div>
+</header>
+<div class="controls">
+  <button onclick="document.querySelectorAll('details.msg').forEach(d=>d.open=true)">expand all</button>
+  <button onclick="document.querySelectorAll('details.msg').forEach(d=>d.open=false)">collapse all</button>
+</div>
+<details class="msg r-system" open><summary><span class="rolebadge">system prompt</span></summary><div class="mbody"><div class="blk"><pre>You are a web research assistant. Use hn_search to find recent Hacker News discussions, fetch_url to read them, and clean_html to extract text. Then synthesize the key themes with links. Be concise.</pre></div></div></details>
+<section class="call">
+<div class="callno">MODEL CALL #1</div>
+<div class="dir">&rarr; REQUEST &middot; 1 messages &middot; ~529 tokens</div>
+<details class="msg r-user" open><summary><span class="rolebadge">user</span><span class="msummary">text</span></summary><div class="mbody"><div class="blk"><span class="blabel b-text">text</span><pre>What are people saying about LangGraph on Hacker News recently? Search, read a couple of discussions, and summarize the key themes with links.</pre></div></div></details>
+<div class="dir">&larr; RESPONSE &middot; stop_reason = <span class="stopr">tool_use</span></div>
+<details class="msg r-assistant" open><summary><span class="rolebadge">assistant</span><span class="msummary">reasoning, tool_use</span></summary><div class="mbody"><div class="blk"><span class="blabel b-reasoning">reasoning</span><pre>Let me search for recent LangGraph discussions on Hacker News.</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: hn_search
+input: {
+  &quot;query&quot;: &quot;LangGraph&quot;,
+  &quot;days_back&quot;: 30
+}</pre></div></div></details>
+</section>
+<section class="call">
+<div class="callno">MODEL CALL #2</div>
+<div class="dir">&rarr; REQUEST &middot; 3 messages &middot; ~618 tokens</div>
+<details class="msg r-user"><summary><span class="rolebadge">user</span><span class="msummary">text</span></summary><div class="mbody"><div class="blk"><span class="blabel b-text">text</span><pre>What are people saying about LangGraph on Hacker News recently? Search, read a couple of discussions, and summarize the key themes with links.</pre></div></div></details>
+<details class="msg r-assistant"><summary><span class="rolebadge">assistant</span><span class="msummary">reasoning, tool_use</span></summary><div class="mbody"><div class="blk"><span class="blabel b-reasoning">reasoning</span><pre>Let me search for recent LangGraph discussions on Hacker News.</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: hn_search
+input: {
+  &quot;query&quot;: &quot;LangGraph&quot;,
+  &quot;days_back&quot;: 30
+}</pre></div></div></details>
+<details class="msg r-user" open><summary><span class="rolebadge">user</span><span class="msummary">tool_result</span></summary><div class="mbody"><div class="blk"><span class="blabel b-tool_result">tool result</span><pre>status: success
+Found 4 stories:
+- Skein-JS – The open-source LangGraph Platform alternative, for TypeScript (2 pts, 0 comments) https://news.ycombinator.com/item?id=49275717
+- Prism Reviewer – Multi-agent AI code reviewer built with LangGraph and LiteLLM (1 pts, 0 comments) https://news.ycombinator.com/item?id=49408247
+- Show HN: HarnessRouter: Unified interface for agent harnesses (10 pts, 14 comments) https://news.ycombinator.com/item?id=49335595
+- Ask HN: Are there any production LLM pipeline setups to learn from? (6 pts, 0 comments) https://news.ycombinator.com/item?id=49273774</pre></div></div></details>
+<div class="dir">&larr; RESPONSE &middot; stop_reason = <span class="stopr">tool_use</span></div>
+<details class="msg r-assistant" open><summary><span class="rolebadge">assistant</span><span class="msummary">reasoning, tool_use</span></summary><div class="mbody"><div class="blk"><span class="blabel b-reasoning">reasoning</span><pre>The search found 4 stories, but only one has significant discussion (HarnessRouter with 14 comments). Let me fetch that one and maybe also check the Skein-JS story to get a sense of the broader LangGraph ecosystem discussions.</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: fetch_url
+input: {
+  &quot;url&quot;: &quot;https://news.ycombinator.com/item?id=49335595&quot;
+}</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: fetch_url
+input: {
+  &quot;url&quot;: &quot;https://news.ycombinator.com/item?id=49275717&quot;
+}</pre></div></div></details>
+</section>
+<section class="call">
+<div class="callno">MODEL CALL #3</div>
+<div class="dir">&rarr; REQUEST &middot; 5 messages &middot; ~7488 tokens</div>
+<details class="msg r-user"><summary><span class="rolebadge">user</span><span class="msummary">text</span></summary><div class="mbody"><div class="blk"><span class="blabel b-text">text</span><pre>What are people saying about LangGraph on Hacker News recently? Search, read a couple of discussions, and summarize the key themes with links.</pre></div></div></details>
+<details class="msg r-assistant"><summary><span class="rolebadge">assistant</span><span class="msummary">reasoning, tool_use</span></summary><div class="mbody"><div class="blk"><span class="blabel b-reasoning">reasoning</span><pre>Let me search for recent LangGraph discussions on Hacker News.</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: hn_search
+input: {
+  &quot;query&quot;: &quot;LangGraph&quot;,
+  &quot;days_back&quot;: 30
+}</pre></div></div></details>
+<details class="msg r-user"><summary><span class="rolebadge">user</span><span class="msummary">tool_result</span></summary><div class="mbody"><div class="blk"><span class="blabel b-tool_result">tool result</span><pre>status: success
+Found 4 stories:
+- Skein-JS – The open-source LangGraph Platform alternative, for TypeScript (2 pts, 0 comments) https://news.ycombinator.com/item?id=49275717
+- Prism Reviewer – Multi-agent AI code reviewer built with LangGraph and LiteLLM (1 pts, 0 comments) https://news.ycombinator.com/item?id=49408247
+- Show HN: HarnessRouter: Unified interface for agent harnesses (10 pts, 14 comments) https://news.ycombinator.com/item?id=49335595
+- Ask HN: Are there any production LLM pipeline setups to learn from? (6 pts, 0 comments) https://news.ycombinator.com/item?id=49273774</pre></div></div></details>
+<details class="msg r-assistant"><summary><span class="rolebadge">assistant</span><span class="msummary">reasoning, tool_use</span></summary><div class="mbody"><div class="blk"><span class="blabel b-reasoning">reasoning</span><pre>The search found 4 stories, but only one has significant discussion (HarnessRouter with 14 comments). Let me fetch that one and maybe also check the Skein-JS story to get a sense of the broader LangGraph ecosystem discussions.</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: fetch_url
+input: {
+  &quot;url&quot;: &quot;https://news.ycombinator.com/item?id=49335595&quot;
+}</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: fetch_url
+input: {
+  &quot;url&quot;: &quot;https://news.ycombinator.com/item?id=49275717&quot;
+}</pre></div></div></details>
+<details class="msg r-user" open><summary><span class="rolebadge">user</span><span class="msummary">tool_result</span></summary><div class="mbody"><div class="blk"><span class="blabel b-tool_result">tool result</span><pre>status: success
+&lt;html lang=&quot;en&quot; op=&quot;item&quot;&gt;&lt;head&gt;&lt;meta name=&quot;referrer&quot; content=&quot;origin&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;news.css?PVKVP3QUgUHZEy3CHRMM&quot;&gt;&lt;link rel=&quot;icon&quot; href=&quot;y18.svg&quot;&gt;&lt;link rel=&quot;canonical&quot; href=&quot;https://news.ycombinator.com/item?id=49335595&quot;&gt;&lt;title&gt;Show HN: HarnessRouter: Unified interface for agent harnesses | Hacker News&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;center&gt;&lt;table id=&quot;hnmain&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;85%&quot; bgcolor=&quot;#f6f6ef&quot;&gt;&lt;tr&gt;&lt;td bgcolor=&quot;#ff6600&quot;&gt;&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;padding:2px&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:18px;padding-right:4px&quot;&gt;&lt;a href=&quot;https://news.ycombinator.com&quot;&gt;&lt;img src=&quot;y18.svg&quot; width=&quot;18&quot; height=&quot;18&quot; style=&quot;border:1px white solid; display:block&quot;&gt;&lt;/a&gt;&lt;/td&gt;&lt;td style=&quot;line-height:12pt; height:10px;&quot;&gt;&lt;span class=&quot;pagetop&quot;&gt;&lt;b class=&quot;hnname&quot;&gt;&lt;a href=&quot;news&quot;&gt;Hacker News&lt;/a&gt;&lt;/b&gt;&lt;a href=&quot;newest&quot;&gt;new&lt;/a&gt; | &lt;a href=&quot;front&quot;&gt;past&lt;/a&gt; | &lt;a href=&quot;newcomments&quot;&gt;comments&lt;/a&gt; | &lt;a href=&quot;ask&quot;&gt;ask&lt;/a&gt; | &lt;a href=&quot;show&quot;&gt;show&lt;/a&gt; | &lt;a href=&quot;jobs&quot;&gt;jobs&lt;/a&gt; | &lt;a href=&quot;submit&quot; rel=&quot;nofollow&quot;&gt;submit&lt;/a&gt;&lt;/span&gt;&lt;/td&gt;&lt;td style=&quot;text-align:right;padding-right:4px;&quot;&gt;&lt;span class=&quot;pagetop&quot;&gt;&lt;a href=&quot;login?goto=item%3Fid%3D49335595&quot;&gt;login&lt;/a&gt;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&#x27;height:10px&#x27;/&gt;&lt;tr id=&quot;bigbox&quot;&gt;&lt;td&gt;&lt;table class=&quot;fatitem&quot; border=&quot;0&quot;&gt;&lt;tr class=&quot;athing submission&quot; id=&quot;49335595&quot;&gt;&lt;td align=&quot;right&quot; valign=&quot;top&quot; class=&quot;title&quot;&gt;&lt;span class=&quot;rank&quot;&gt;&lt;/span&gt;&lt;/td&gt;&lt;td valign=&quot;top&quot; class=&quot;votelinks&quot;&gt;&lt;center&gt;&lt;a id=&#x27;up_49335595&#x27; href=&#x27;vote?id=49335595&amp;amp;how=up&amp;amp;goto=item%3Fid%3D49335595&#x27;&gt;&lt;div class=&#x27;votearrow&#x27; title=&#x27;upvote&#x27;&gt;&lt;/div&gt;&lt;/a&gt;&lt;/center&gt;&lt;/td&gt;&lt;td class=&quot;title&quot;&gt;&lt;span class=&quot;titleline&quot;&gt;&lt;a href=&quot;https://github.com/harnessrouter/harnessrouter&quot; rel=&quot;nofollow&quot;&gt;Show HN: HarnessRouter: Unified interface for agent harnesses&lt;/a&gt;&lt;span class=&quot;sitebit comhead&quot;&gt; (&lt;a href=&quot;from?site=github.com/harnessrouter&quot;&gt;&lt;span class=&quot;sitestr&quot;&gt;github.com/harnessrouter&lt;/span&gt;&lt;/a&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan=&quot;2&quot;&gt;&lt;/td&gt;&lt;td class=&quot;subtext&quot;&gt;&lt;span class=&quot;subline&quot;&gt;&lt;span class=&quot;score&quot; id=&quot;score_49335595&quot;&gt;10 points&lt;/span&gt; by &lt;a href=&quot;user?id=songrenchu&quot; class=&quot;hnuser&quot;&gt;songrenchu&lt;/a&gt; &lt;span class=&quot;age&quot; title=&quot;2026-08-17T18:33:38.000000Z&quot;&gt;&lt;a href=&quot;item?id=49335595&quot;&gt;17 days ago&lt;/a&gt;&lt;/span&gt; &lt;span id=&quot;unv_49335595&quot;&gt;&lt;/span&gt; | &lt;a href=&quot;hide?id=49335595&amp;amp;goto=item%3Fid%3D49335595&quot;&gt;hide&lt;/a&gt; | &lt;a href=&quot;https://hn.algolia.com/?query=Show%20HN%3A%20HarnessRouter%3A%20Unified%20interface%20for%20agent%20harnesses&amp;type=story&amp;dateRange=all&amp;sort=byDate&amp;storyText=false&amp;prefix&amp;page=0&quot; class=&quot;hnpast&quot;&gt;past&lt;/a&gt; | &lt;a href=&quot;fave?id=49335595&amp;amp;auth=c5755a0c32232fa4787ff7035fcbc1811feaf02c&quot;&gt;favorite&lt;/a&gt; | &lt;a href=&quot;item?id=49335595&quot;&gt;14&amp;nbsp;comments&lt;/a&gt;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan=&quot;2&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;div class=&quot;toptext&quot; style=&quot;margin-top:4px&quot;&gt;Hey HN! We are building HarnessRouter, a canonical API for running Codex, Claude Code, Hermes, and other managed agent harnesses as your product backend.&lt;p&gt;Before building HarnessRouter, I used to build our own agent harness for our products. I tried LangGraph, agent SDKs from different vendors, pydantic, LLM tool use &amp;#x2F; function call, and so on. It&amp;#x27;s a very heavy lifting engineering effort, and I am disappointed about the agent deliveries compared to what Codex, CC can deliver. That changed my mindset. The frontier labs and famous open source communities are already putting so much engineering effort to build the world&amp;#x27;s best harnesses, why not leverage them directly instead of building our own, just like how we call LLM chat completion endpoints instead of training our own models?&lt;p&gt;We provide a docker image to run HarnessRouter locally.&lt;p&gt;----------&lt;p&gt;Quickstart:&lt;p&gt;&lt;pre&gt;&lt;code&gt;    docker pull harnessrouter&amp;#x2F;harnessrouter
+
+    docker run -d --name harnessrouter -p 127.0.0.1:3000:3000 -v harnessrouter:&amp;#x2F;data harnessrouter&amp;#x2F;harnessrouter
+
+    docker logs -f harnessrouter
+
+    Wait for the &amp;quot;ready on :3000&amp;quot; show up, then open the browser at http:&amp;#x2F;&amp;#x2F;localhost:3000.
+    Default username&amp;#x2F;password is harnessrouter&amp;#x2F;harnessrouter
+
+    Then in Integrations page, add your model provider credentials or API keys.
+    In Harnesses tab, as of today we provide routing to Codex, Claude Code, and Hermes as base harnesses.
+    You can customize any of them and configure harness instruction, MCP tools, and skills.
+
+    Then go to Tasks and let them do jobs.
+&lt;/code&gt;&lt;/pre&gt;
+----------&lt;p&gt;Every harness has its own request&amp;#x2F;response format and incompatible with each other. We propose Unified Harness Procotol [1] to standardize how an application talks to an agent harness. It covers harness selection and configuration, task execution, event streaming, sessions start cancel and resume, artifact management and delivery, and failure handling. It&amp;#x27;s similar idea like LiteLLM, but for harnesses rather than models.&lt;p&gt;HarnessRouter implements UHP. We provide an AGENTS.md [2] and your coding agent can follow it to integrate your application with the harnesses available.&lt;p&gt;We also provide starter kits [3] to demonstrate some types of agentic products that can be built on HarnessRouter. It currently includes PPT agent, Spreadsheet agent, BI Dashboard agent, and Video generation agent.&lt;p&gt;Can&amp;#x27;t wait to hear what you think!&lt;p&gt;[1] &lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;unifiedharnessprotocol.org&quot; rel=&quot;nofollow&quot;&gt;https:&amp;#x2F;&amp;#x2F;unifiedharnessprotocol.org&lt;/a&gt;&lt;p&gt;[2] &lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;harnessrouter.ai&amp;#x2F;agents.md&quot; rel=&quot;nofollow&quot;&gt;https:&amp;#x2F;&amp;#x2F;harnessrouter.ai&amp;#x2F;agents.md&lt;/a&gt;&lt;p&gt;[3] &lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;harnessrouter&amp;#x2F;starter-kit&quot; rel=&quot;nofollow&quot;&gt;https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;harnessrouter&amp;#x2F;starter-kit&lt;/a&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;br&gt;
+&lt;table border=&quot;0&quot; class=&quot;comment-tree&quot;&gt;&lt;tr class=&quot;athing comtr&quot; id=&quot;49336407&quot;&gt;&lt;td&gt;&lt;table border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;ind&quot; indent=&quot;0&quot;&gt;&lt;img src=&quot;s.gif&quot; height=&quot;1&quot; width=&quot;0&quot;&gt;&lt;/td&gt;&lt;td v
+… [truncated, 26775 chars total]</pre></div><div class="blk"><span class="blabel b-tool_result">tool result</span><pre>status: success
+Error fetching https://news.ycombinator.com/item?id=49275717: 429 Client Error: Too Many Requests for url: https://news.ycombinator.com/item?id=49275717</pre></div></div></details>
+<div class="dir">&larr; RESPONSE &middot; stop_reason = <span class="stopr">tool_use</span></div>
+<details class="msg r-assistant" open><summary><span class="rolebadge">assistant</span><span class="msummary">text, tool_use</span></summary><div class="mbody"><div class="blk"><span class="blabel b-text">text</span><pre>Let me try the Skein-JS thread via an alternative approach and also peek at the Ask HN thread.</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: hn_search
+input: {
+  &quot;query&quot;: &quot;Skein-JS TypeScript LangGraph alternative&quot;,
+  &quot;days_back&quot;: 30
+}</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: hn_search
+input: {
+  &quot;query&quot;: &quot;LangGraph production LLM pipeline&quot;,
+  &quot;days_back&quot;: 30
+}</pre></div></div></details>
+</section>
+<section class="call">
+<div class="callno">MODEL CALL #4</div>
+<div class="dir">&rarr; REQUEST &middot; 7 messages &middot; ~9636 tokens</div>
+<details class="msg r-user"><summary><span class="rolebadge">user</span><span class="msummary">text</span></summary><div class="mbody"><div class="blk"><span class="blabel b-text">text</span><pre>What are people saying about LangGraph on Hacker News recently? Search, read a couple of discussions, and summarize the key themes with links.</pre></div></div></details>
+<details class="msg r-assistant"><summary><span class="rolebadge">assistant</span><span class="msummary">reasoning, tool_use</span></summary><div class="mbody"><div class="blk"><span class="blabel b-reasoning">reasoning</span><pre>Let me search for recent LangGraph discussions on Hacker News.</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: hn_search
+input: {
+  &quot;query&quot;: &quot;LangGraph&quot;,
+  &quot;days_back&quot;: 30
+}</pre></div></div></details>
+<details class="msg r-user"><summary><span class="rolebadge">user</span><span class="msummary">tool_result</span></summary><div class="mbody"><div class="blk"><span class="blabel b-tool_result">tool result</span><pre>status: success
+Found 4 stories:
+- Skein-JS – The open-source LangGraph Platform alternative, for TypeScript (2 pts, 0 comments) https://news.ycombinator.com/item?id=49275717
+- Prism Reviewer – Multi-agent AI code reviewer built with LangGraph and LiteLLM (1 pts, 0 comments) https://news.ycombinator.com/item?id=49408247
+- Show HN: HarnessRouter: Unified interface for agent harnesses (10 pts, 14 comments) https://news.ycombinator.com/item?id=49335595
+- Ask HN: Are there any production LLM pipeline setups to learn from? (6 pts, 0 comments) https://news.ycombinator.com/item?id=49273774</pre></div></div></details>
+<details class="msg r-assistant"><summary><span class="rolebadge">assistant</span><span class="msummary">reasoning, tool_use</span></summary><div class="mbody"><div class="blk"><span class="blabel b-reasoning">reasoning</span><pre>The search found 4 stories, but only one has significant discussion (HarnessRouter with 14 comments). Let me fetch that one and maybe also check the Skein-JS story to get a sense of the broader LangGraph ecosystem discussions.</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: fetch_url
+input: {
+  &quot;url&quot;: &quot;https://news.ycombinator.com/item?id=49335595&quot;
+}</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: fetch_url
+input: {
+  &quot;url&quot;: &quot;https://news.ycombinator.com/item?id=49275717&quot;
+}</pre></div></div></details>
+<details class="msg r-user"><summary><span class="rolebadge">user</span><span class="msummary">tool_result</span></summary><div class="mbody"><div class="blk"><span class="blabel b-tool_result">tool result</span><pre>status: success
+&lt;html lang=&quot;en&quot; op=&quot;item&quot;&gt;&lt;head&gt;&lt;meta name=&quot;referrer&quot; content=&quot;origin&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;news.css?PVKVP3QUgUHZEy3CHRMM&quot;&gt;&lt;link rel=&quot;icon&quot; href=&quot;y18.svg&quot;&gt;&lt;link rel=&quot;canonical&quot; href=&quot;https://news.ycombinator.com/item?id=49335595&quot;&gt;&lt;title&gt;Show HN: HarnessRouter: Unified interface for agent harnesses | Hacker News&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;center&gt;&lt;table id=&quot;hnmain&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;85%&quot; bgcolor=&quot;#f6f6ef&quot;&gt;&lt;tr&gt;&lt;td bgcolor=&quot;#ff6600&quot;&gt;&lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;padding:2px&quot;&gt;&lt;tr&gt;&lt;td style=&quot;width:18px;padding-right:4px&quot;&gt;&lt;a href=&quot;https://news.ycombinator.com&quot;&gt;&lt;img src=&quot;y18.svg&quot; width=&quot;18&quot; height=&quot;18&quot; style=&quot;border:1px white solid; display:block&quot;&gt;&lt;/a&gt;&lt;/td&gt;&lt;td style=&quot;line-height:12pt; height:10px;&quot;&gt;&lt;span class=&quot;pagetop&quot;&gt;&lt;b class=&quot;hnname&quot;&gt;&lt;a href=&quot;news&quot;&gt;Hacker News&lt;/a&gt;&lt;/b&gt;&lt;a href=&quot;newest&quot;&gt;new&lt;/a&gt; | &lt;a href=&quot;front&quot;&gt;past&lt;/a&gt; | &lt;a href=&quot;newcomments&quot;&gt;comments&lt;/a&gt; | &lt;a href=&quot;ask&quot;&gt;ask&lt;/a&gt; | &lt;a href=&quot;show&quot;&gt;show&lt;/a&gt; | &lt;a href=&quot;jobs&quot;&gt;jobs&lt;/a&gt; | &lt;a href=&quot;submit&quot; rel=&quot;nofollow&quot;&gt;submit&lt;/a&gt;&lt;/span&gt;&lt;/td&gt;&lt;td style=&quot;text-align:right;padding-right:4px;&quot;&gt;&lt;span class=&quot;pagetop&quot;&gt;&lt;a href=&quot;login?goto=item%3Fid%3D49335595&quot;&gt;login&lt;/a&gt;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&#x27;height:10px&#x27;/&gt;&lt;tr id=&quot;bigbox&quot;&gt;&lt;td&gt;&lt;table class=&quot;fatitem&quot; border=&quot;0&quot;&gt;&lt;tr class=&quot;athing submission&quot; id=&quot;49335595&quot;&gt;&lt;td align=&quot;right&quot; valign=&quot;top&quot; class=&quot;title&quot;&gt;&lt;span class=&quot;rank&quot;&gt;&lt;/span&gt;&lt;/td&gt;&lt;td valign=&quot;top&quot; class=&quot;votelinks&quot;&gt;&lt;center&gt;&lt;a id=&#x27;up_49335595&#x27; href=&#x27;vote?id=49335595&amp;amp;how=up&amp;amp;goto=item%3Fid%3D49335595&#x27;&gt;&lt;div class=&#x27;votearrow&#x27; title=&#x27;upvote&#x27;&gt;&lt;/div&gt;&lt;/a&gt;&lt;/center&gt;&lt;/td&gt;&lt;td class=&quot;title&quot;&gt;&lt;span class=&quot;titleline&quot;&gt;&lt;a href=&quot;https://github.com/harnessrouter/harnessrouter&quot; rel=&quot;nofollow&quot;&gt;Show HN: HarnessRouter: Unified interface for agent harnesses&lt;/a&gt;&lt;span class=&quot;sitebit comhead&quot;&gt; (&lt;a href=&quot;from?site=github.com/harnessrouter&quot;&gt;&lt;span class=&quot;sitestr&quot;&gt;github.com/harnessrouter&lt;/span&gt;&lt;/a&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan=&quot;2&quot;&gt;&lt;/td&gt;&lt;td class=&quot;subtext&quot;&gt;&lt;span class=&quot;subline&quot;&gt;&lt;span class=&quot;score&quot; id=&quot;score_49335595&quot;&gt;10 points&lt;/span&gt; by &lt;a href=&quot;user?id=songrenchu&quot; class=&quot;hnuser&quot;&gt;songrenchu&lt;/a&gt; &lt;span class=&quot;age&quot; title=&quot;2026-08-17T18:33:38.000000Z&quot;&gt;&lt;a href=&quot;item?id=49335595&quot;&gt;17 days ago&lt;/a&gt;&lt;/span&gt; &lt;span id=&quot;unv_49335595&quot;&gt;&lt;/span&gt; | &lt;a href=&quot;hide?id=49335595&amp;amp;goto=item%3Fid%3D49335595&quot;&gt;hide&lt;/a&gt; | &lt;a href=&quot;https://hn.algolia.com/?query=Show%20HN%3A%20HarnessRouter%3A%20Unified%20interface%20for%20agent%20harnesses&amp;type=story&amp;dateRange=all&amp;sort=byDate&amp;storyText=false&amp;prefix&amp;page=0&quot; class=&quot;hnpast&quot;&gt;past&lt;/a&gt; | &lt;a href=&quot;fave?id=49335595&amp;amp;auth=c5755a0c32232fa4787ff7035fcbc1811feaf02c&quot;&gt;favorite&lt;/a&gt; | &lt;a href=&quot;item?id=49335595&quot;&gt;14&amp;nbsp;comments&lt;/a&gt;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan=&quot;2&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;div class=&quot;toptext&quot; style=&quot;margin-top:4px&quot;&gt;Hey HN! We are building HarnessRouter, a canonical API for running Codex, Claude Code, Hermes, and other managed agent harnesses as your product backend.&lt;p&gt;Before building HarnessRouter, I used to build our own agent harness for our products. I tried LangGraph, agent SDKs from different vendors, pydantic, LLM tool use &amp;#x2F; function call, and so on. It&amp;#x27;s a very heavy lifting engineering effort, and I am disappointed about the agent deliveries compared to what Codex, CC can deliver. That changed my mindset. The frontier labs and famous open source communities are already putting so much engineering effort to build the world&amp;#x27;s best harnesses, why not leverage them directly instead of building our own, just like how we call LLM chat completion endpoints instead of training our own models?&lt;p&gt;We provide a docker image to run HarnessRouter locally.&lt;p&gt;----------&lt;p&gt;Quickstart:&lt;p&gt;&lt;pre&gt;&lt;code&gt;    docker pull harnessrouter&amp;#x2F;harnessrouter
+
+    docker run -d --name harnessrouter -p 127.0.0.1:3000:3000 -v harnessrouter:&amp;#x2F;data harnessrouter&amp;#x2F;harnessrouter
+
+    docker logs -f harnessrouter
+
+    Wait for the &amp;quot;ready on :3000&amp;quot; show up, then open the browser at http:&amp;#x2F;&amp;#x2F;localhost:3000.
+    Default username&amp;#x2F;password is harnessrouter&amp;#x2F;harnessrouter
+
+    Then in Integrations page, add your model provider credentials or API keys.
+    In Harnesses tab, as of today we provide routing to Codex, Claude Code, and Hermes as base harnesses.
+    You can customize any of them and configure harness instruction, MCP tools, and skills.
+
+    Then go to Tasks and let them do jobs.
+&lt;/code&gt;&lt;/pre&gt;
+----------&lt;p&gt;Every harness has its own request&amp;#x2F;response format and incompatible with each other. We propose Unified Harness Procotol [1] to standardize how an application talks to an agent harness. It covers harness selection and configuration, task execution, event streaming, sessions start cancel and resume, artifact management and delivery, and failure handling. It&amp;#x27;s similar idea like LiteLLM, but for harnesses rather than models.&lt;p&gt;HarnessRouter implements UHP. We provide an AGENTS.md [2] and your coding agent can follow it to integrate your application with the harnesses available.&lt;p&gt;We also provide starter kits [3] to demonstrate some types of agentic products that can be built on HarnessRouter. It currently includes PPT agent, Spreadsheet agent, BI Dashboard agent, and Video generation agent.&lt;p&gt;Can&amp;#x27;t wait to hear what you think!&lt;p&gt;[1] &lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;unifiedharnessprotocol.org&quot; rel=&quot;nofollow&quot;&gt;https:&amp;#x2F;&amp;#x2F;unifiedharnessprotocol.org&lt;/a&gt;&lt;p&gt;[2] &lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;harnessrouter.ai&amp;#x2F;agents.md&quot; rel=&quot;nofollow&quot;&gt;https:&amp;#x2F;&amp;#x2F;harnessrouter.ai&amp;#x2F;agents.md&lt;/a&gt;&lt;p&gt;[3] &lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;harnessrouter&amp;#x2F;starter-kit&quot; rel=&quot;nofollow&quot;&gt;https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;harnessrouter&amp;#x2F;starter-kit&lt;/a&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;br&gt;
+&lt;table border=&quot;0&quot; class=&quot;comment-tree&quot;&gt;&lt;tr class=&quot;athing comtr&quot; id=&quot;49336407&quot;&gt;&lt;td&gt;&lt;table border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;ind&quot; indent=&quot;0&quot;&gt;&lt;img src=&quot;s.gif&quot; height=&quot;1&quot; width=&quot;0&quot;&gt;&lt;/td&gt;&lt;td v
+… [truncated, 26775 chars total]</pre></div><div class="blk"><span class="blabel b-tool_result">tool result</span><pre>status: success
+Error fetching https://news.ycombinator.com/item?id=49275717: 429 Client Error: Too Many Requests for url: https://news.ycombinator.com/item?id=49275717</pre></div></div></details>
+<details class="msg r-assistant"><summary><span class="rolebadge">assistant</span><span class="msummary">text, tool_use</span></summary><div class="mbody"><div class="blk"><span class="blabel b-text">text</span><pre>Let me try the Skein-JS thread via an alternative approach and also peek at the Ask HN thread.</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: hn_search
+input: {
+  &quot;query&quot;: &quot;Skein-JS TypeScript LangGraph alternative&quot;,
+  &quot;days_back&quot;: 30
+}</pre></div><div class="blk"><span class="blabel b-tool_use">tool use</span><pre>name: hn_search
+input: {
+  &quot;query&quot;: &quot;LangGraph production LLM pipeline&quot;,
+  &quot;days_back&quot;: 30
+}</pre></div></div></details>
+<details class="msg r-user" open><summary><span class="rolebadge">user</span><span class="msummary">tool_result</span></summary><div class="mbody"><div class="blk"><span class="blabel b-tool_result">tool result</span><pre>status: success
+Found 1 stories:
+- Skein-JS – The open-source LangGraph Platform alternative, for TypeScript (2 pts, 0 comments) https://news.ycombinator.com/item?id=49275717</pre></div><div class="blk"><span class="blabel b-tool_result">tool result</span><pre>status: success
+Found 1 stories:
+- Ask HN: Are there any production LLM pipeline setups to learn from? (6 pts, 0 comments) https://news.ycombinator.com/item?id=49273774</pre></div></div></details>
+<div class="dir">&larr; RESPONSE &middot; stop_reason = <span class="stopr">end_turn</span></div>
+<details class="msg r-assistant" open><summary><span class="rolebadge">assistant</span><span class="msummary">reasoning, text</span></summary><div class="mbody"><div class="blk"><span class="blabel b-reasoning">reasoning</span><pre>I have enough information to summarize the key themes from the discussions I&#x27;ve read. Let me compile the summary.</pre></div><div class="blk"><span class="blabel b-text">text</span><pre>Here&#x27;s a summary of what people are saying about LangGraph on Hacker News recently:
+
+---
+
+## Key Themes
+
+### 1. 🔧 Complexity vs. Pragmatism — Building on Top vs. Rebuilding
+The most substantive thread came from **HarnessRouter** (Show HN, 10 pts, 14 comments). The founders describe their journey building agent harnesses with LangGraph, agent SDKs, Pydantic, and LLM tool use — and how disappointed they were with the results compared to what Codex and Claude Code deliver out of the box.
+
+&gt; *&quot;The frontier labs and famous open source communities are already putting so much engineering effort to build the world&#x27;s best harnesses, why not leverage them directly instead of building our own, just like how we call LLM chat completion endpoints instead of training our own models?&quot;*
+
+**Takeaway:** Some developers feel that building custom orchestration layers on top of LangGraph involves heavy lifting that may not be worth it when frontier-grade harnesses (Codex, Claude Code, Hermes) are already highly optimized.
+
+### 2. 🔄 Emergence of a &quot;Harness Router&quot; Pattern
+HarnessRouter proposes a **Unified Harness Protocol (UHP)** — essentially an OpenRouter but for agent harnesses instead of LLMs. This sparked a debate about:
+- **Routing across harnesses for non-coding use cases** (PPT agents, spreadsheet agents, video editing agents, BI dashboards)
+- **Fallback and cost optimization** — using the right harness × model × tools combination per task
+- **Concerns about becoming a &quot;lowest common denominator&quot; API** — the authors responded by detailing task interfaces, capability discovery, and config that captures harness differences
+
+One commenter noted the utility for white-collar agent use cases, even if it&#x27;s less clear for coding scenarios.
+
+### 3. 📦 LangGraph Alternatives in TypeScript Ecosystem
+**Skein-JS** (2 pts) launched as an open-source LangGraph Platform alternative for TypeScript. It generated little discussion but reflects ongoing interest in TypeScript-native agent orchestration solutions.
+
+### 4. 🏭 Production LLM Pipelines — Still a Gap
+An **Ask HN** thread (6 pts) asked for production LLM pipeline setups to learn from, with no comments yet — suggesting there&#x27;s real hunger for battle-tested examples beyond the usual tutorials.
+
+---
+
+## Summary Table
+
+| Story | Points | Comments | Theme |
+|---|---|---|---|
+| [HarnessRouter – Unified interface for agent harnesses](https://news.ycombinator.com/item?id=49335595) | 10 | 14 | LangGraph seen as too heavy; harness abstraction emerges |
+| [Ask HN: Production LLM pipelines to learn from?](https://news.ycombinator.com/item?id=49273774) | 6 | 0 | Unmet demand for production examples |
+| [Skein-JS – TypeScript LangGraph Platform alternative](https://news.ycombinator.com/item?id=49275717) | 2 | 0 | TS ecosystem still seeking LangGraph alternatives |
+
+---
+
+## Bottom Line
+The conversation around LangGraph reflects a **maturation split**: LangGraph remains popular for orchestration, but a growing camp argues that building on top of it for production agent products involves too much infrastructure work — and that leveraging purpose-built harnesses directly (with a routing/abstraction layer) is more pragmatic. The broader ecosystem is also hungry for **production-ready reference architectures**.</pre></div></div></details>
+</section>
+</body></html>
