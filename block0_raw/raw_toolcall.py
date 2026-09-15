@@ -52,6 +52,19 @@ def fetch_url(url: str) -> str:
     except Exception as e:
         return f"✗ Error: {str(e)}"
 
+def get_current_time() -> str:
+    """Get the current time."""
+    from datetime import datetime
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+def calculate(expression: str) -> str:
+    """Evaluate a mathematical expression."""
+    try:
+        result = eval(expression)  # NEVER do this in production!
+        return str(result)
+    except Exception as e:
+        return f"Error: {str(e)}"
+
 # ============================================================================
 # Tool schema (hand-written JSON Schema)
 # ============================================================================
@@ -71,6 +84,32 @@ tools = [
                     }
                 },
                 "required": ["url"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_current_time",
+            "description": "Tells the current time",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            }
+        }
+    },
+    {
+        "type":"function",
+        "function":{
+            "name":"calculate",
+            "description":"Evaluates a mathematical expression",
+            "parameters":{
+                "type":"object",
+                "properties":{
+                    "type":"string"
+                },
+                "required":["string"]
             }
         }
     }
@@ -124,6 +163,16 @@ def run_agent(task: str):
                     result = fetch_url(function_args["url"])
                     print(f"  ⎿ {result.split(chr(10))[0]}")  # First line only
                     print()
+                elif function_name=="get_current_time":
+                    print(f"- Finding time...")
+                    result=get_current_time()
+                    print(result)
+                    print()
+                elif function_name=="calculate":
+                    print(f"- calculating...")
+                    result=calculate(function_args["string"])
+                    print(result)
+                    print()
                 else:
                     result = f"Error: Unknown tool {function_name}"
 
@@ -157,7 +206,9 @@ def run_agent(task: str):
 
 if __name__ == "__main__":
     # Simple task to demonstrate the loop
-    task = "Fetch https://www.coursera.org/in/articles/game-developer tell me what you see"
+    #task = "Fetch https://lakersnation.com/jj-redick-believes-lakers-luka-doncic-is-not-being-talked-about-enough/ tell me what you see"
+    #task="tell me the current time"
+    task="my vacations start at 24 november, can you find out how many days are left?"
 
     print("=" * 70)
     print("BLOCK 0: THE NAKED PROTOCOL")
@@ -169,3 +220,4 @@ if __name__ == "__main__":
     print("\n" + "=" * 70)
     print("EXERCISE: Add a second tool (e.g., 'get_current_time')")
     print("=" * 70)
+
