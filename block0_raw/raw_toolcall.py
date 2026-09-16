@@ -107,9 +107,12 @@ tools = [
             "parameters":{
                 "type":"object",
                 "properties":{
-                    "type":"string"
+                    "expression":{
+                        "type":"string",
+                        "description":"the mathematical expression to evaluate"
+                    }
                 },
-                "required":["string"]
+                "required":["expression "]
             }
         }
     }
@@ -170,7 +173,7 @@ def run_agent(task: str):
                     print()
                 elif function_name=="calculate":
                     print(f"- calculating...")
-                    result=calculate(function_args["string"])
+                    result=calculate(function_args["expression"])
                     print(result)
                     print()
                 else:
@@ -208,7 +211,8 @@ if __name__ == "__main__":
     # Simple task to demonstrate the loop
     #task = "Fetch https://lakersnation.com/jj-redick-believes-lakers-luka-doncic-is-not-being-talked-about-enough/ tell me what you see"
     #task="tell me the current time"
-    task="my vacations start at 24 november, can you find out how many days are left?"
+    #task="my vacations start at 24 november, can you find out how many days are left?"
+    task="what is 25+7"
 
     print("=" * 70)
     print("BLOCK 0: THE NAKED PROTOCOL")
