@@ -52,19 +52,6 @@ def fetch_url(url: str) -> str:
     except Exception as e:
         return f"✗ Error: {str(e)}"
 
-def get_current_time() -> str:
-    """Get the current time."""
-    from datetime import datetime
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-def calculate(expression: str) -> str:
-    """Evaluate a mathematical expression."""
-    try:
-        result = eval(expression)  # NEVER do this in production!
-        return str(result)
-    except Exception as e:
-        return f"Error: {str(e)}"
-
 # ============================================================================
 # Tool schema (hand-written JSON Schema)
 # ============================================================================
@@ -213,6 +200,7 @@ if __name__ == "__main__":
     #task="tell me the current time"
     #task="my vacations start at 24 november, can you find out how many days are left?"
     task="what is 25+7"
+    task = "Fetch https://www.coursera.org/in/articles/game-developer tell me what you see"
 
     print("=" * 70)
     print("BLOCK 0: THE NAKED PROTOCOL")
@@ -224,4 +212,3 @@ if __name__ == "__main__":
     print("\n" + "=" * 70)
     print("EXERCISE: Add a second tool (e.g., 'get_current_time')")
     print("=" * 70)
-
